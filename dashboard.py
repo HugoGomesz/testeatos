@@ -4,6 +4,7 @@ import pyodbc
 import plotly.express as px
 from Pillow import Image
 import calendar
+import pymssql
 
 st.set_page_config(layout="wide")
 st.title("📊 Dashboard de Vendas por Filial")
