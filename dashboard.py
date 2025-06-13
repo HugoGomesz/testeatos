@@ -21,11 +21,13 @@ password = st.secrets["database"]["DB_PASSWORD"]
 @st.cache_data
 def carregar_dados():
     conn_str = (
-       f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-       f"SERVER={server};"
-       f"DATABASE={database};"
-       f"UID={user};"
-       f"PWD={password}"
+       f"DRIVER=FreeTDS;"
+       f"SERVER={st.secrets['database']['DB_SERVER']};"
+       f"DATABASE={st.secrets['database']['DB_DATABASE']};"
+       f"UID={st.secrets['database']['DB_USER']};"
+       f"PWD={st.secrets['database']['DB_PASSWORD']};"
+       f"PORT=1433;"
+       f"TDS_Version=8.0;"
     )
     conn = pyodbc.connect(conn_str)
     query = "SELECT * FROM tbVendasDashboard"
@@ -174,4 +176,5 @@ with tab3:
 
     else:
         st.info("Não há mês anterior disponível para comparação.")
+
 
