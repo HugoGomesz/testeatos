@@ -27,6 +27,7 @@ def carregar_dados():
         f"DATABASE={st.secrets['database']['DB_DATABASE']};"
         f"UID={st.secrets['database']['DB_USER']};"
         f"PWD={st.secrets['database']['DB_PASSWORD']};"
+        f"Encrypt=yes;"
         f"TrustServerCertificate=yes;"
     )
     conn = pyodbc.connect(conn_str)
