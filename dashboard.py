@@ -12,24 +12,14 @@ st.title("📊 Dashboard de Vendas por Filial")
 logo = Image.open("ATOS CAPITAL BRANCO.png")
 st.sidebar.image(logo, use_container_width=True)
 
-driver = st.secrets["database"]["DB_DRIVER"]
-server = st.secrets["database"]["DB_SERVER"]
-database = st.secrets["database"]["DB_DATABASE"]
-user = st.secrets["database"]["DB_USER"]
-password = st.secrets["database"]["DB_PASSWORD"]
-
 @st.cache_data
 def carregar_dados():
-    conn_str = (
-        f"DRIVER={{{driver}}};"
-        f"SERVER={server};"
-        f"DATABASE={database};"
-        f"UID={user};"
-        f"PWD={password};"
-        f"Encrypt=yes;"
-        f"TrustServerCertificate=yes;"
+    conn = pymssql.connect(
+        server=st.secrets["database"]["DB_SERVER"],
+        user=st.secrets["database"]["DB_USER"],
+        password=st.secrets["database"]["DB_PASSWORD"],
+        database=st.secrets["database"]["DB_DATABASE"]
     )
-    conn = pyodbc.connect(conn_str)
     query = "SELECT * FROM tbVendasDashboard"
     df = pd.read_sql(query, conn)
     conn.close()
