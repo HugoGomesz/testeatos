@@ -18,23 +18,23 @@ user = st.secrets["database"]["DB_USER"]
 password = st.secrets["database"]["DB_PASSWORD"]
 
 # Função para conectar ao banco e carregar os dados
+# Função para conectar ao banco e carregar os dados
 @st.cache_data
 def carregar_dados():
     conn_str = (
-       f"DRIVER=FreeTDS;"
-       f"SERVER={st.secrets['database']['DB_SERVER']};"
-       f"DATABASE={st.secrets['database']['DB_DATABASE']};"
-       f"UID={st.secrets['database']['DB_USER']};"
-       f"PWD={st.secrets['database']['DB_PASSWORD']};"
-       f"PORT=1433;"
-       f"TDS_Version=8.0;"
+        f"DRIVER={st.secrets['database']['DB_DRIVER']};"
+        f"SERVER={st.secrets['database']['DB_SERVER']};"
+        f"DATABASE={st.secrets['database']['DB_DATABASE']};"
+        f"UID={st.secrets['database']['DB_USER']};"
+        f"PWD={st.secrets['database']['DB_PASSWORD']};"
+        f"TrustServerCertificate=yes;"
     )
     conn = pyodbc.connect(conn_str)
     query = "SELECT * FROM tbVendasDashboard"
     df = pd.read_sql(query, conn)
     conn.close()
     return df
-
+    
 # Carregando dados
 df = carregar_dados()
 df.rename(columns={"nmFilial": "FILIAL", "vlVenda": "VLVENDA", "dtVenda": "DTVENDA", "nrCNPJ": "CNPJ"}, inplace=True)
