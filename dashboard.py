@@ -12,21 +12,20 @@ st.title("📊 Dashboard de Vendas por Filial")
 logo = Image.open("ATOS CAPITAL BRANCO.png")
 st.sidebar.image(logo, use_container_width=True)
 
+driver = st.secrets["database"]["DB_DRIVER"]
 server = st.secrets["database"]["DB_SERVER"]
 database = st.secrets["database"]["DB_DATABASE"]
 user = st.secrets["database"]["DB_USER"]
 password = st.secrets["database"]["DB_PASSWORD"]
 
-# Função para conectar ao banco e carregar os dados
-# Função para conectar ao banco e carregar os dados
 @st.cache_data
 def carregar_dados():
     conn_str = (
-        f"DRIVER={st.secrets['database']['DB_DRIVER']};"
-        f"SERVER={st.secrets['database']['DB_SERVER']};"
-        f"DATABASE={st.secrets['database']['DB_DATABASE']};"
-        f"UID={st.secrets['database']['DB_USER']};"
-        f"PWD={st.secrets['database']['DB_PASSWORD']};"
+        f"DRIVER={{{driver}}};"
+        f"SERVER={server};"
+        f"DATABASE={database};"
+        f"UID={user};"
+        f"PWD={password};"
         f"Encrypt=yes;"
         f"TrustServerCertificate=yes;"
     )
